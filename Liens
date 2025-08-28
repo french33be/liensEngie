@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Liens ENGIE - Résidentiel & Professionnel</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f4f4f4; }
+    h1, h2 { color: #0078d4; }
+  
+search-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+#searchInput {
+  flex: 1;
+  padding: 8px;
+  font-size: 16px;
+}
+
+#clearButton {
+  padding: 8px 12px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #0078d4;
+  border: none;
+  border-radius: 4px;
+}
+
+#clearButton:hover {
+  background-color: #ddd;
+}
+    .link-block {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+    .label {
+      font-weight: bold;
+      width: 300px;
+      margin-right: 10px;
+    }
+    input[type="text"] {
+      width: 55%;
+      padding: 5px;
+      margin-right: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      padding: 5px 10px;
+      background-color: #0078d4;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button.copied {
+      background-color: #28a745;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🔗 Liens ENGIE</h1>
+
+<div class="search-wrapper">
+    <input type="text" id="searchInput" placeholder="Rechercher" onkeyup="filterLinks()">
+  <button id="clearButton" onclick="clearInput()">✖</button>
+</div>
+
+
+  <div id="container"></div>
+
+  <script>
+    const liens = {
+      "Résidentiel": {
+        "Comparer contrat": "www.engie.be/fr/offre-energie/",
+        "Modifier montant mensuel": "www.engie.be/monacompte",
+        "Modifier identifiant / mot de passe (connecté)": "www.engie.be/fr/espace-client/informations-personnelles/donnees-compte",
+        "Reset Password (non-connecté)": "www.engie.be/fr/usermanagement/resetpassword#/B2CEmailStep",
+        "Créer un espace client": "www.engie.be/fr/usermanagement/selfregistration",
+        "Modifier les données personnelles": "www.engie.be/fr/espace-client/informations-personnelles/donnees-personnelles",
+        "Consulter le solde ouvert": "www.engie.be/fr/espace-client/factures-et-paiements/solde-ouvert/",
+        "Consulter les factures": "www.engie.be/fr/espace-client/factures-et-paiements/factures-paiements",
+        "Demander un délai ou un plan de paiement": "www.engie.be/fr/espace-client/factures-et-paiements/delais-de-paiement?origin=Timeline#/paymentDelayHomeStep",
+        "Consulter ou modifier le plan de paiement en cours": "www.engie.be/fr/espace-client/factures-et-paiements/solde-ouvert/",
+        "Modifier le n° de compte pour un remboursement": "www.engie.be/fr/espace-client/factures-et-paiements/remboursement/",
+        "Modifier la domiciliation": "www.engie.be/fr/espace-client/factures-et-paiements/domiciliation/",
+        "Modifier Zoomit": "www.engie.be/fr/espace-client/factures-et-paiements/activer-zoomit/",
+        "Modifier E-invoicing": "www.engie.be/fr/espace-client/factures-et-paiements/activer-factures-via-email/",
+        "Consulter des documents": "www.engie.be/fr/espace-client/informations-personnelles/mes-documents#/Documents",
+        "Charger des documents": "www.engie.be/fr/espace-client/informations-personnelles/mes-documents#/UploadDocument",
+        "Historique des paiements": "www.engie.be/fr/espace-client/factures-et-paiements/ensemble-paiements",
+        "Historique consommation annuelle": "www.engie.be/fr/espace-client/votre-consommation/historique-consommation/",
+        "Liste des relevés": "www.engie.be/fr/espace-client/votre-consommation/consommation-liste-releves/",
+        "Procédure déménagement": "www.engie.be/fr/support/faq/demenagement/je-demenage/declarer-demenagement/",
+        "Déménager": "www.engie.be/fr/energie/electricite-gaz/demenager/",
+        "Moving out": "www.engie.be/fr/energie/electricite-gaz/demenager/facture-de-cloture",
+        "Moving in / Ajouter une adresse": "www.engie.be/fr/energie/electricite-gaz/demenager/nouvelle-habitation",
+        "Ajouter un contrat gaz/électricité": "www.engie.be/fr/espace-client/situation/details/",
+        "Maison vide": "www.engie.be/fr/energie/electricite-gaz/demenager/maison-vide",
+        "Devenir nouveau client": "www.engie.be/fr/contrat/simulation?scenario=1#/client",
+        "Supplier Switch Win (ancien client)": "www.engie.be/fr/espace-client/situation/simulation?scenario=14#/processus-souhaite",
+        "Supplier Switch Win (nouveau client)": "www.engie.be/fr/contrat/simulation?scenario=1#/hasSupplier",
+        "Confirmer le contrat": "www.engie.be/fr/contrat/confirmer",
+        "Formulaire reprise des énergies": "www.engie.be/fr/energie/electricite-gaz/demenager#document",
+        "Choisir un autre pack": "www.engie.be/fr/espace-client/informations-personnelles/details",
+        "Fiches de prix": "www.engie.be/fr/prix",
+        "Simulation contrat (pas encore client)": "www.engie.be/fr/contrat/simulation?scenario=1&origin=landingPage#/client",
+        "Infos compteurs": "www.engie.be/fr/espace-client/informations-personnelles/donnees-compteur",
+        "Demander le water kit": "www.engie.be/fr/espace-client/water-kit#/intro",
+        "Ajouter Home Maintenance": "www.engie.be/fr/chauffage-assistance/entretien-chaudiere",
+        "Ajouter Home Assistance": "www.engie.be/fr/chauffage-assistance/assistance-domicile/",
+        "Infos entretien chaudière": "www.engie.be/fr/chauffage-assistance/entretien-chaudiere/",
+        "Infos dépannage chaudière": "www.engie.be/fr/chauffage-assistance/depannage-chaudiere/",
+        "Infos remplacement chaudière": "www.engie.be/fr/remplacement-chaudiere/prix-et-subsides",
+        "Réparation onduleur": "www.engie.be/fr/formulaires/reparation-onduleur#/formStep",
+        "Envoyer une plainte": "www.engie.be/fr/contact/nouvelle-question-plainte#/",
+        "Envoyer un message via espace client": "www.engie.be/fr/espace-client/informations-personnelles/mes-messages",
+        "Avantages espace client": "www.engie.be/fr/avantages",
+        "Rectification index estimé": "www.engie.be/releve",
+        "UCMC": "www.engie.be/fr/espace-client/informations-personnelles/donnees-compteur/tarif-normal-bihoraire-update/",
+	"Contact": "www.engie.be/fr/contact"
+
+      },
+      "Professionnel": {
+        "Modifier montant mensuel": "www.engie.be/fr/professionals/espace-client/factures-et-paiements/ajustez-acompte#/",
+        "Modifier jour de facturation": "www.engie.be/fr/professionals/espace-client/factures-et-paiements/donnees-de-paiements",
+        "Modifier identifiant / mot de passe (connecté)": "www.engie.be/fr/professionals/espace-client/informations-personnelles/donnees-compte",
+        "Reset Password (non-connecté)": "www.engie.be/fr/professionals/usermanagement/resetpassword#/B2CEmailStep",
+        "Créer un espace client": "www.engie.be/fr/professionals/usermanagement/self-registration",
+        "Modifier les données personnelles": "www.engie.be/fr/professionals/espace-client/informations-personnelles/donnees-personnelles",
+        "Consulter le solde ouvert": "www.engie.be/fr/professionals/espace-client/factures-et-paiements/solde-ouvert/",
+        "Consulter les factures": "www.engie.be/fr/professionals/espace-client/factures-et-paiements/fas-paiements",
+        "Demander un délai ou un plan de paiement": "www.engie.be/fr/professionals/espace-client/factures-et-paiements/delais-de-paiement?origin=Timeline#/paymentDelayHomeStep",
+        "Consulter les factures": "www.engie.be/fr/professionals/espace-client/factures-et-paiements/fas-paiements",
+        "Demander un délai ou un plan de paiement": "www.engie.be/fr/professionals/espace-client/factures-et-paiements/delais-de-paiement?origin=Timeline#/paymentDelayHomeStep",
+        "Modifier le n° de compte pour un remboursement": "www.engie.be/fr/professionals/espace-client/factures-et-paiements/remboursement/",
+        "Modifier la domiciliation": "www.engie.be/fr/professionals/espace-client/factures-et-paiements/domiciliation/",
+        "Modifier Zoomit": "www.engie.be/fr/professionals/espace-client/factures-et-paiements/activer-zoomit/",
+        "Modifier E-invoicing": "www.engie.be/fr/professionals/espace-client/factures-et-paiements/activer-factures-via-email/",
+        "Consulter des documents": "www.engie.be/fr/professionals/espace-client/informations-personnelles/mes-documents#/Documents",
+        "Charger des documents": "www.engie.be/fr/professionals/espace-client/informations-personnelles/mes-documents#/UploadDocument",
+        "Historique des paiements": "www.engie.be/fr/professionals/espace-client/factures-et-paiements/ensemble-paiements",
+        "Budget Optimizer": "www.engie.be/fr/professionals/espace-client/factures-et-paiements/ajustez-acompte#/",
+        "Energy Manager": "www.engie.be/fr/professionals/espace-client/votre-consommation/consommation-mensuelle",
+        "Procédure Emménagement/déménagement": "www.engie.be/fr/professionals/support/faq/demenagement/je-demenage/declarer-demenagement/",
+        "Déménager (lien draft)": "www.engie.be/fr/professionals/energie/electricite-gaz/demenager",
+        "Moving out": "www.engie.be/fr/professionals/espace-client/situation/decompte-final/",
+        "Moving in / Ajouter une adresse supplémentaire": "www.engie.be/fr/professionals/energie/electricite-gaz/demenager/nouvel-immeuble/",
+        "Ajouter un contrat de gaz ou d'électricité au contrat existant": "www.engie.be/fr/professionals/espace-client/informations-personnelles/details/",
+        "Maison vide": "www.engie.be/fr/professionals/energie/electricite-gaz/demenager/maison-vide",
+        "Devenir nouveau client": "www.engie.be/fr/professionals/contrat/simulation/?scenario=1#/client",
+        "Confirmer le contrat": "www.engie.be/fr/confirmerpro",
+        "Formulaire de reprise des énergies": "www.engie.be/fr/professionals/energie/electricite-gaz/demenager#document",
+        "Choisir un autre pack (simulation pour un autre contrat)": "www.engie.be/fr/professionals/espace-client/informations-personnelles/details",
+        "Fiches de prix - Tarifs et conditions": "www.engie.be/fr/prixpro",
+        "Effectuer une simulation (pas encore client)": "www.engie.be/fr/professionals/contrat/simulation?scenario=1&origin=landingPage#/client",
+        "Informations sur mes compteurs": "www.engie.be/fr/professionals/espace-client/informations-personnelles/donnees-compteur",
+        "Demander le water kit": "www.engie.be/fr/professionals/espace-client/water-kit#/intro",
+        "Ajouter le Home Maintenance": "www.engie.be/fr/professionals/reparation-entretien/entretien-chaudiere",
+        "Ajouter le Home Assistance": "www.engie.be/fr/professionals/reparation-entretien/assistance-commerce/",
+        "Info générales entretien de chaudière": "www.engie.be/fr/professionals/reparation-entretien/entretien-chaudiere/",
+        "Info générales dépannage de chaudière": "www.engie.be/fr/professionals/reparation-entretien/assistance-commerce/",
+        "Info générales remplacement de chaudère": "www.engie.be/fr/professionals/remplacement-chaudiere/",
+        "Remplacement / Réparation ondeurleur": "www.engie.be/fr/formulaires/reparation-onduleur#/formStep",
+        "Historique consommation annuelle": "www.engie.be/fr/professionals/espace-client/votre-consommation/historique-consommation/",
+        "Liste des relevés": "www.engie.be/fr/professionals/espace-client/votre-consommation/consommation-liste-releves/",
+        "Envoyer une plainte": "www.engie.be/fr/professionals/contact/nouvelle-question-plainte#/",
+        "Envoyer un message via espace client": "www.engie.be/fr/professionals/espace-client/informations-personnelles/mes-messages",
+        "Avantages sur espace client": "www.engie.be/fr/professionals/avantages",
+        "Rectification index estimé": "www.engie.be/relevepro",
+        "Contact": "www.engie.be/fr/professionals/contact/"
+      },
+     "Divers": {
+	"Qui est mon GRD": "www.synergrid.be/index.cfm?PageID=16823",
+        "Comment calculer la consommation d'un appareil électrique": "www.energuide.be/fr/questions-reponses/comment-calculer-la-consommation-dun-appareil-electrique/94/",
+	"Formulaire de contact SME": "www.engie.be/fr/business/contact/formulaire",
+	"INFORMATIONS INJECTION-PRELEVEMENT-COMPENSATION": "www.engie.be/fr/injection-panneaux-solaires"
+      }
+	
+    };
+
+    const container = document.getElementById("container");
+
+function toggleClearButton() {
+  const input = document.getElementById('searchInput');
+  const button = document.getElementById('clearButton');
+  button.style.display = input.value.length > 0 ? 'inline-block' : 'none';
+}
+
+function clearInput() {
+  const input = document.getElementById('searchInput');
+  input.value = '';
+  input.focus(); // remet le curseur dans le champ
+  filterLinks(); // si tu utilises une fonction de filtrage
+}
+    function createLinkBlock(label, url) {
+      const block = document.createElement("div");
+      block.className = "link-block";
+
+      const labelElem = document.createElement("div");
+      labelElem.className = "label";
+      labelElem.textContent = label;
+
+      const input = document.createElement("input");
+      input.type = "text";
+      input.value = url;
+      input.readOnly = true;
+
+      const button = document.createElement("button");
+      button.textContent = "Copier";
+      button.onclick = () => {
+        navigator.clipboard.writeText(url);
+        button.textContent = "Copié !";
+        button.classList.add("copied");
+        setTimeout(() => {
+          button.textContent = "Copier";
+          button.classList.remove("copied");
+        }, 1500);
+      };
+
+      block.appendChild(labelElem);
+      block.appendChild(input);
+      block.appendChild(button);
+      return block;
+    }
+
+    function renderLinks() {
+      container.innerHTML = "";
+      for (const [category, links] of Object.entries(liens)) {
+        const title = document.createElement("h2");
+        title.textContent = category;
+        container.appendChild(title);
+
+        for (const [label, url] of Object.entries(links)) {
+          container.appendChild(createLinkBlock(label, url));
+        }
+      }
+    }
+
+    function filterLinks() {
+      const query = document.getElementById("searchInput").value.toLowerCase();
+      container.innerHTML = "";
+
+      for (const [category, links] of Object.entries(liens)) {
+        const filtered = Object.entries(links).filter(([label]) =>
+          label.toLowerCase().includes(query)
+        );
+        if (filtered.length > 0) {
+          const title = document.createElement("h2");
+          title.textContent = category;
+          container.appendChild(title);
+
+          for (const [label, url] of filtered) {
+            container.appendChild(createLinkBlock(label, url));
+          }
+        }
+      }
+    }
+
+    renderLinks();
+  </script>
+</body>
+</html>
